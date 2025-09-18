@@ -11,7 +11,11 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Tab.Navigator>
+        <Tab.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
           <Tab.Screen
             name="Home"
             component={HomeScreen}
