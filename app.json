@@ -45,7 +45,8 @@
         {
           "launchMode": "most-recent"
         }
-      ]
+      ],
+      "react-native-edge-to-edge"
     ],
     "experiments": {
       "typedRoutes": true,
