@@ -46,7 +46,8 @@
           "launchMode": "most-recent"
         }
       ],
-      "react-native-edge-to-edge"
+      "react-native-edge-to-edge",
+      "expo-video"
     ],
     "experiments": {
       "typedRoutes": true,
