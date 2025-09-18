@@ -31,10 +31,6 @@ const Feed = ({ videos }: Props) => {
     itemVisiblePercentThreshold: 80,
   }).current;
 
-  /** TODO: disallow scrolling past 1 vid
-   * onMomentumScrollBegin / onMomentumScrollEnd maybe?
-   * get scroll offset + direction -> scrollToIndex ?
-   *  */
   return (
     <View style={[styles.container]}>
       <FlashList
@@ -43,6 +39,7 @@ const Feed = ({ videos }: Props) => {
         pagingEnabled
         snapToInterval={itemHeight}
         decelerationRate="fast"
+        disableIntervalMomentum={true}
         renderItem={({ item }) => (
           <VideoCard video={item} isActive={item.id === currentId} />
         )}
