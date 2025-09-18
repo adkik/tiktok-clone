@@ -3,47 +3,52 @@ import ProfileScreen from "@/screens/ProfileScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const Tab = createBottomTabNavigator();
 
+const queryClient = new QueryClient();
+
 const App = () => {
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <Tab.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Tab.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{
-              tabBarIcon: ({ color, focused }) => (
-                <Ionicons
-                  name={focused ? "home" : "home-outline"}
-                  size={25}
-                  color={color}
-                />
-              ),
+      <QueryClientProvider client={queryClient}>
+        <NavigationContainer>
+          <Tab.Navigator
+            screenOptions={{
+              headerShown: false,
             }}
-          />
-          <Tab.Screen
-            name="Profile"
-            component={ProfileScreen}
-            options={{
-              tabBarIcon: ({ color, focused }) => (
-                <Ionicons
-                  name={focused ? "person" : "person-outline"}
-                  size={25}
-                  color={color}
-                />
-              ),
-            }}
-          />
-        </Tab.Navigator>
-      </NavigationContainer>
+          >
+            <Tab.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{
+                tabBarIcon: ({ color, focused }) => (
+                  <Ionicons
+                    name={focused ? "home" : "home-outline"}
+                    size={25}
+                    color={color}
+                  />
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="Profile"
+              component={ProfileScreen}
+              options={{
+                tabBarIcon: ({ color, focused }) => (
+                  <Ionicons
+                    name={focused ? "person" : "person-outline"}
+                    size={25}
+                    color={color}
+                  />
+                ),
+              }}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </QueryClientProvider>
     </SafeAreaProvider>
   );
 };
