@@ -33,13 +33,15 @@ const Feed = ({ videos }: Props) => {
 
   return (
     <View style={[styles.container]}>
-      <FlashList
+      <FlashList<Video>
+        keyExtractor={(item) => item.id}
         data={videos}
         ref={listRef}
         pagingEnabled
         snapToInterval={itemHeight}
         decelerationRate="fast"
         disableIntervalMomentum={true}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <VideoCard video={item} isActive={item.id === currentId} />
         )}
