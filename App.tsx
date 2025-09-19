@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import BootSplash from "react-native-bootsplash";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const Tab = createBottomTabNavigator();
@@ -14,7 +15,11 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <QueryClientProvider client={queryClient}>
-        <NavigationContainer>
+        <NavigationContainer
+          onReady={() => {
+            BootSplash.hide();
+          }}
+        >
           <Tab.Navigator
             screenOptions={{
               headerShown: false,
