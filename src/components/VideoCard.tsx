@@ -1,11 +1,14 @@
+import { useLikedVideos } from "@/store";
 import { Video as VideoType } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+import { useIsFocused } from "@react-navigation/native";
+import { useEventListener } from "expo";
 import { useVideoPlayer, VideoView } from "expo-video";
 import React, { useEffect, useState } from "react";
 import { Dimensions, Pressable, Text, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
+import LikeButton from "./LikeButton";
 
 type Props = {
   video: VideoType;
@@ -20,8 +23,16 @@ const VideoCard = ({ video, isActive }: Props) => {
   const [paused, setPaused] = useState(false);
   const isFocused = useIsFocused();
 
-  const player = useVideoPlayer(video.url, (player) => {
+  const { generateAndCache } = useLikedVideos();
+
+  const player = useVideoPlayer(video.url, async (player) => {
     player.loop = true;
+  });
+
+  useEventListener(player, "statusChange", ({ status }) => {
+    if (status === "readyToPlay") {
+      generateAndCache(video.id, video.url);
+    }
   });
 
   useEffect(() => {
@@ -34,21 +45,10 @@ const VideoCard = ({ video, isActive }: Props) => {
     }
   }, [isActive, isFocused]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      // Do something when the screen is focused
-      return () => {
-        // Do something when the screen is unfocused
-        // Useful for cleanup functions
-      };
-    }, [])
-  );
-
   function play() {
     player.play();
     setPaused(false);
   }
-
   function pause() {
     player.pause();
     setPaused(true);
@@ -70,6 +70,7 @@ const VideoCard = ({ video, isActive }: Props) => {
       <View style={styles.caption}>
         <Text style={{ color: "#fff", fontSize: 16 }}>{video.caption}</Text>
       </View>
+      <LikeButton id={video.id} />
       {paused ? (
         <Pressable style={styles.playButton} onPress={play}>
           <Ionicons name={"play"} size={80} style={styles.playButtonIcon} />

@@ -3,3 +3,8 @@ export type Video = {
   url: string;
   caption: string;
 };
+
+export type Thumbnail = {
+  id: string;
+  uri: string | null;
+};
