@@ -8,14 +8,13 @@ import * as VideoThumbnails from "expo-video-thumbnails";
  */
 export async function generateThumbnail(url: string, duration: number) {
   if (!url) {
-    console.warn("Cannot generate thumbnail: URL is undefined");
     return null;
   }
 
-  // 3s or duration - 0.5s, but never below 0
+  // 5s or duration - 0.5s, but never below 0
   const safeTime = duration
-    ? Math.max(Math.min(3000, duration * 1000 - 500), 0)
-    : 3000;
+    ? Math.max(Math.min(5000, duration * 1000 - 500), 0)
+    : 5000;
 
   try {
     const { uri } = await VideoThumbnails.getThumbnailAsync(url, {
@@ -23,7 +22,6 @@ export async function generateThumbnail(url: string, duration: number) {
     });
     return uri;
   } catch (e) {
-    console.warn("Thumbnail generation failed:", e);
     return null;
   }
 }
