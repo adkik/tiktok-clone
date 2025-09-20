@@ -66,9 +66,9 @@ const VideoCard = ({ video, isActive }: Props) => {
           nativeControls={false}
         />
       </Pressable>
-      <View style={styles.caption}>
-        <Text style={{ color: "#fff", fontSize: 16 }}>{video.caption}</Text>
-      </View>
+      <Text style={[styles.caption, { color: "#fff", fontSize: 16 }]}>
+        {video.caption}
+      </Text>
       <LikeButton id={video.id} />
       {paused ? (
         <Pressable style={styles.playButton} onPress={play}>
@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 80,
     left: 15,
+    fontFamily: "Vercetti-Regular",
   },
   playButton: {
     position: "absolute",

@@ -41,8 +41,15 @@
           "launchMode": "most-recent"
         }
       ],
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/Vercetti-Regular.otf"]
+        }
+      ],
       "react-native-edge-to-edge",
-      "expo-video"
+      "expo-video",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true,

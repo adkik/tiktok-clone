@@ -23,6 +23,10 @@ const App = () => {
           <Tab.Navigator
             screenOptions={{
               headerShown: false,
+              tabBarLabelStyle: {
+                fontFamily: "Vercetti-Regular",
+                fontSize: 12,
+              },
             }}
           >
             <Tab.Screen
