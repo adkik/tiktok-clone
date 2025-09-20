@@ -2,7 +2,7 @@ import VideoCard from "@/components/VideoCard";
 import { Video } from "@/types";
 import { FlashList } from "@shopify/flash-list";
 import React, { useMemo, useRef, useState } from "react";
-import { View, ViewToken } from "react-native";
+import { AccessibilityInfo, View, ViewToken } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { getInitialIndex } from "@/utils/get-initial-index";
 import { useAdjustedHeight } from "@/hooks/useAdjustedHeight";
@@ -20,6 +20,10 @@ const Feed = ({ videos, startID = "0" }: Props) => {
     ({ viewableItems }: { viewableItems: ViewToken[] }) => {
       if (viewableItems.length > 0) {
         setCurrentId(viewableItems[0].item.id);
+
+        AccessibilityInfo.announceForAccessibility(
+          `Showing video ${viewableItems[0].index! + 1} of ${videos?.length ?? 0}`
+        );
       }
     }
   ).current;
@@ -34,7 +38,7 @@ const Feed = ({ videos, startID = "0" }: Props) => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} accessible={false}>
       <FlashList<Video>
         keyExtractor={(item) => item.id}
         data={videos}

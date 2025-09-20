@@ -1,11 +1,12 @@
 import type { FunctionComponent, PropsWithChildren } from "react";
 import React from "react";
-import { StyleProp, Text, TextStyle } from "react-native";
+import { StyleProp, Text, TextProps, TextStyle } from "react-native";
 import type { UnistylesVariants } from "react-native-unistyles";
 import { StyleSheet } from "react-native-unistyles";
 
 interface TypographyProps
   extends PropsWithChildren,
+    TextProps,
     UnistylesVariants<typeof styles> {
   style?: StyleProp<TextStyle>;
 }
@@ -17,6 +18,7 @@ export const Typography: FunctionComponent<TypographyProps> = ({
   isCentered = false,
   isPrimary,
   style,
+  ...rest
 }) => {
   styles.useVariants({
     isBold,
@@ -25,7 +27,11 @@ export const Typography: FunctionComponent<TypographyProps> = ({
     size,
   });
 
-  return <Text style={[styles.title, style]}>{children}</Text>;
+  return (
+    <Text style={[styles.title, style]} {...rest}>
+      {children}
+    </Text>
+  );
 };
 
 const styles = StyleSheet.create((theme, rt) => ({

@@ -18,7 +18,14 @@ const LikeButton = ({ id, onTap }: Props) => {
 
   return (
     <GestureDetector gesture={onTap}>
-      <View style={styles.button}>
+      <View
+        style={styles.button}
+        accessible
+        accessibilityRole="button"
+        accessibilityLabel={liked ? "Unlike video" : "Like video"}
+        accessibilityState={{ selected: liked }}
+        accessibilityHint={liked ? "Tap to unlike" : "Tap to like"}
+      >
         <Ionicons
           name={"heart"}
           size={60}

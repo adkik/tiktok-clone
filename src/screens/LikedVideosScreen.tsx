@@ -7,9 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-type Props = {};
-
-const LikedVideosScreen = (props: Props) => {
+const LikedVideosScreen = () => {
   const route = useRoute<RouteProp<ProfileStackParamList, "LikedVideos">>();
   const { liked } = useLikedVideos();
   const { startID } = route.params ?? {};
@@ -17,7 +15,16 @@ const LikedVideosScreen = (props: Props) => {
   const { data } = useQuery({
     queryKey: ["liked_videos"],
     queryFn: async () => {
-      return (await fetchVideos()).filter(({ id }) => liked.has(id));
+      const allVideos = await fetchVideos();
+      const likedVideos = allVideos.filter(({ id }) => liked.has(id));
+
+      likedVideos.sort((a, b) => {
+        const aDate = liked.get(a.id)?.addedAt ?? 0;
+        const bDate = liked.get(b.id)?.addedAt ?? 0;
+        return bDate - aDate;
+      });
+
+      return likedVideos;
     },
   });
 

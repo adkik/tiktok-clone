@@ -24,8 +24,12 @@ const Grid = ({ videoIDs }: Props) => {
         data={videoIDs}
         keyExtractor={(item) => item.id}
         numColumns={3}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <Pressable
+            accessible
+            accessibilityRole="imagebutton"
+            accessibilityLabel={`Liked video ${index + 1} of ${videoIDs?.length ?? 0}`}
+            accessibilityHint="Tap to open and start playing"
             onPress={() =>
               navigation.navigate("LikedVideos", { startID: item.id })
             }

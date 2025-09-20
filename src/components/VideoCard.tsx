@@ -94,19 +94,31 @@ const VideoCard = ({ video, isActive }: Props) => {
 
   return (
     <GestureDetector gesture={composed}>
-      <View style={{ height: adjustedHeight, flex: 1 }}>
+      <View
+        style={{ height: adjustedHeight, flex: 1 }}
+        accessible
+        accessibilityRole="image" // TikTok treats video as an image element
+        accessibilityLabel={video.caption}
+        accessibilityHint="Tap to toggle playback, double tap to like"
+      >
         <VideoView
           player={player}
           style={[styles.video]}
           contentFit="cover"
           nativeControls={false}
         />
-        <Typography isCaption style={styles.caption}>
+        <Typography isCaption style={styles.caption} accessible={false}>
           {video.caption}
         </Typography>
         <LikeButton id={video.id} onTap={likeTap} />
         {paused ? (
-          <View style={styles.playButton}>
+          <View
+            style={styles.playButton}
+            accessible
+            accessibilityRole="button"
+            accessibilityLabel="Play video"
+            onAccessibilityTap={play}
+          >
             <Ionicons name={"play"} size={80} style={styles.playButtonIcon} />
           </View>
         ) : null}
