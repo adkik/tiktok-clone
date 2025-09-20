@@ -42,7 +42,7 @@ const VideoCard = ({ video, isActive }: Props) => {
   useEffect(() => {
     setPaused(false);
 
-    if (isActive && isFocused && !paused) {
+    if (isActive && isFocused) {
       player?.play();
     } else {
       player?.pause();
@@ -76,7 +76,7 @@ const VideoCard = ({ video, isActive }: Props) => {
         .onEnd(() => {
           scheduleOnRN(toggleLike, video.id);
         }),
-    [toggleLike]
+    [toggleLike, video.id]
   );
 
   const singleTap = useMemo(
@@ -87,7 +87,7 @@ const VideoCard = ({ video, isActive }: Props) => {
         .onEnd(() => {
           scheduleOnRN(togglePlay);
         }),
-    [togglePlay]
+    [togglePlay, doubleTap, likeTap]
   );
 
   const composed = Gesture.Exclusive(doubleTap, singleTap);

@@ -1,6 +1,6 @@
-import Grid from "@/components/Grid";
+import React, { useMemo } from "react";
 import { useLikedVideos } from "@/stores/use-liked-videos";
-import React, { useEffect, useMemo } from "react";
+import Grid from "@/components/Grid";
 
 const ProfileScreen = () => {
   const liked = useLikedVideos((state) => state.liked);
