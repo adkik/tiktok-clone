@@ -1,11 +1,13 @@
 import { useLikedVideos } from "@/stores/use-liked-videos";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { Pressable, StyleSheet } from "react-native";
+import { Dimensions, Pressable, StyleSheet } from "react-native";
 
 type Props = {
   id: string;
 };
+
+const { height } = Dimensions.get("window");
 
 const LikeButton = ({ id }: Props) => {
   const { isLiked, toggleLike } = useLikedVideos();
@@ -30,6 +32,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 40,
     right: 15,
+    top: height / 2, // halfway down the visible area
+    transform: [{ translateY: -40 }], // shift up so icon stack is truly centered
+    alignItems: "center",
   },
   icon: {
     textShadowColor: "rgba(0, 0, 0, 0.3)",

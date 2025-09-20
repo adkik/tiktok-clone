@@ -36,6 +36,7 @@ const Feed = ({ videos }: Props) => {
       <FlashList<Video>
         keyExtractor={(item) => item.id}
         data={videos}
+        style={styles.feed}
         ref={listRef}
         pagingEnabled
         snapToInterval={itemHeight}
@@ -56,6 +57,9 @@ export default Feed;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  feed: {
     flex: 1,
   },
 });

@@ -58,13 +58,10 @@ const VideoCard = ({ video, isActive }: Props) => {
 
   return (
     <View style={[styles.container, { height: itemHeight }]}>
-      <Pressable
-        onPress={pause}
-        style={[styles.videoWrapper, { height: itemHeight }]}
-      >
+      <Pressable onPress={pause} style={[styles.videoWrapper]}>
         <VideoView
           player={player}
-          style={[styles.video, { height: itemHeight }]}
+          style={[styles.video]}
           contentFit="cover"
           nativeControls={false}
         />
@@ -97,7 +94,7 @@ const styles = StyleSheet.create({
   },
   caption: {
     position: "absolute",
-    bottom: 40,
+    bottom: 80,
     left: 15,
   },
   playButton: {
