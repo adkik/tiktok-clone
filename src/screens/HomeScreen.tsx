@@ -12,7 +12,7 @@ const HomeScreen = () => {
 
   return (
     <GestureHandlerRootView>
-      <Feed videos={data} />;
+      <Feed videos={data} />
     </GestureHandlerRootView>
   );
 };
