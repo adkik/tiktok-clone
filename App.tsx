@@ -1,5 +1,5 @@
+import ProfileStackNavigator from "@/navigators/ProfileStackNavigator";
 import HomeScreen from "@/screens/HomeScreen";
-import ProfileScreen from "@/screens/ProfileScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -40,7 +40,7 @@ const App = () => {
             />
             <Tab.Screen
               name="Profile"
-              component={ProfileScreen}
+              component={ProfileStackNavigator}
               options={{
                 tabBarIcon: ({ color, focused }) => (
                   <Ionicons

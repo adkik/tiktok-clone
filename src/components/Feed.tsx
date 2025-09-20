@@ -1,23 +1,22 @@
 import VideoCard from "@/components/VideoCard";
 import { Video } from "@/types";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import { FlashList, FlashListRef } from "@shopify/flash-list";
-import React, { useRef, useState } from "react";
+import { FlashList } from "@shopify/flash-list";
+import React, { useMemo, useRef, useState } from "react";
 import { Dimensions, View, ViewToken } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
 type Props = {
   videos: Video[] | undefined;
+  startID?: string;
 };
 const { height } = Dimensions.get("window");
 
-const Feed = ({ videos }: Props) => {
+const Feed = ({ videos, startID = "0" }: Props) => {
   const [currentId, setCurrentId] = useState<string | null>(null);
 
   const tabBarHeight = useBottomTabBarHeight();
   const itemHeight = height - tabBarHeight;
-
-  const listRef = useRef<FlashListRef<any>>(null);
 
   const onViewableItemsChanged = useRef(
     ({ viewableItems }: { viewableItems: ViewToken[] }) => {
@@ -31,23 +30,31 @@ const Feed = ({ videos }: Props) => {
     itemVisiblePercentThreshold: 80,
   }).current;
 
+  const initialIndex = useMemo(() => {
+    const idx = videos?.findIndex((v) => v.id === startID);
+    if (idx) {
+      return idx >= 0 ? idx : 0;
+    }
+    return 0;
+  }, [videos, startID]);
+
   return (
     <View style={[styles.container]}>
       <FlashList<Video>
         keyExtractor={(item) => item.id}
         data={videos}
         style={styles.feed}
-        ref={listRef}
         pagingEnabled
         snapToInterval={itemHeight}
+        initialScrollIndex={initialIndex}
         decelerationRate="fast"
         disableIntervalMomentum={true}
         showsVerticalScrollIndicator={false}
+        onViewableItemsChanged={onViewableItemsChanged}
+        viewabilityConfig={viewabilityConfig}
         renderItem={({ item }) => (
           <VideoCard video={item} isActive={item.id === currentId} />
         )}
-        onViewableItemsChanged={onViewableItemsChanged}
-        viewabilityConfig={viewabilityConfig}
       />
     </View>
   );
