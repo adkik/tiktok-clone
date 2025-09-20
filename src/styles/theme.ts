@@ -9,7 +9,6 @@ const lightTheme = {
     ...sharedColors,
     backgroundColor: "#ffffff",
     borderColor: "#000000",
-    test: "#000000",
     icon: "#000000",
     typography: "#000000",
     accent: sharedColors.salmon,
