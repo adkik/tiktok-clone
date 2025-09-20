@@ -3,8 +3,9 @@ import { Video } from "@/types";
 import { FlashList } from "@shopify/flash-list";
 import React, { useMemo, useRef, useState } from "react";
 import { Dimensions, View, ViewToken } from "react-native";
-import { StyleSheet, useUnistyles } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { getInitialIndex } from "@/utils/get-initial-index";
 
 type Props = {
   videos: Video[] | undefined;
@@ -16,7 +17,6 @@ const Feed = ({ videos, startID = "0" }: Props) => {
   const [currentId, setCurrentId] = useState<string | null>(null);
   const tabBarHeight = useBottomTabBarHeight();
   const adjustedHeight = height - tabBarHeight;
-  const { rt } = useUnistyles();
 
   const onViewableItemsChanged = useRef(
     ({ viewableItems }: { viewableItems: ViewToken[] }) => {
@@ -30,13 +30,10 @@ const Feed = ({ videos, startID = "0" }: Props) => {
     itemVisiblePercentThreshold: 80,
   }).current;
 
-  const initialIndex = useMemo(() => {
-    const idx = videos?.findIndex((v) => v.id === startID);
-    if (idx) {
-      return idx >= 0 ? idx : 0;
-    }
-    return 0;
-  }, [videos, startID]);
+  const initialIndex = useMemo(
+    () => getInitialIndex(videos, startID),
+    [videos, startID]
+  );
 
   return (
     <View style={styles.container}>
