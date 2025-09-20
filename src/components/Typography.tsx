@@ -1,0 +1,72 @@
+import type { FunctionComponent, PropsWithChildren } from "react";
+import React from "react";
+import { StyleProp, Text, TextStyle } from "react-native";
+import type { UnistylesVariants } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
+
+interface TypographyProps
+  extends PropsWithChildren,
+    UnistylesVariants<typeof styles> {
+  style?: StyleProp<TextStyle>;
+}
+
+export const Typography: FunctionComponent<TypographyProps> = ({
+  children,
+  size,
+  isBold = false,
+  isCentered = false,
+  isPrimary,
+  style,
+}) => {
+  styles.useVariants({
+    isBold,
+    isCentered,
+    isPrimary,
+    size,
+  });
+
+  return <Text style={[styles.title(), style]}>{children}</Text>;
+};
+
+const styles = StyleSheet.create((theme, rt) => ({
+  title: () => ({
+    fontFamily: "Vercetti-Regular",
+    variants: {
+      isCaption: {
+        true: { color: "#FFFFFF" }, // always white
+      },
+      isBold: {
+        true: {
+          fontWeight: "bold",
+        },
+      },
+      isCentered: {
+        true: {
+          textAlign: "center",
+        },
+      },
+      isPrimary: {
+        true: {
+          color: theme.colors.accent,
+        },
+        default: {
+          color: theme.colors.typography,
+        },
+      },
+      size: {
+        small: {
+          fontSize: rt.fontScale * 10,
+        },
+        medium: {
+          fontSize: rt.fontScale * 16,
+        },
+        large: {
+          fontSize: rt.fontScale * 30,
+        },
+        default: {
+          fontSize: rt.fontScale * 20,
+        },
+      },
+    },
+  }),
+}));

@@ -1,19 +1,24 @@
+import "@/styles/theme";
 import ProfileStackNavigator from "@/navigators/ProfileStackNavigator";
 import HomeScreen from "@/screens/HomeScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { StatusBar } from "expo-status-bar";
 import BootSplash from "react-native-bootsplash";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { useUnistyles } from "react-native-unistyles";
 
 const Tab = createBottomTabNavigator();
 
 const queryClient = new QueryClient();
 
 const App = () => {
+  const { theme } = useUnistyles();
+
   return (
-    <SafeAreaProvider>
+    <>
+      <StatusBar style="auto" />
       <QueryClientProvider client={queryClient}>
         <NavigationContainer
           onReady={() => {
@@ -26,6 +31,11 @@ const App = () => {
               tabBarLabelStyle: {
                 fontFamily: "Vercetti-Regular",
                 fontSize: 12,
+                color: theme.colors.typography,
+              },
+              tabBarStyle: {
+                backgroundColor: theme.colors.backgroundColor,
+                borderTopColor: theme.colors.borderColor,
               },
             }}
           >
@@ -33,6 +43,8 @@ const App = () => {
               name="Home"
               component={HomeScreen}
               options={{
+                tabBarActiveTintColor: theme.colors.icon,
+                tabBarInactiveTintColor: theme.colors.icon,
                 tabBarIcon: ({ color, focused }) => (
                   <Ionicons
                     name={focused ? "home" : "home-outline"}
@@ -46,6 +58,8 @@ const App = () => {
               name="Profile"
               component={ProfileStackNavigator}
               options={{
+                tabBarActiveTintColor: theme.colors.icon,
+                tabBarInactiveTintColor: theme.colors.icon,
                 tabBarIcon: ({ color, focused }) => (
                   <Ionicons
                     name={focused ? "person" : "person-outline"}
@@ -58,7 +72,7 @@ const App = () => {
           </Tab.Navigator>
         </NavigationContainer>
       </QueryClientProvider>
-    </SafeAreaProvider>
+    </>
   );
 };
 

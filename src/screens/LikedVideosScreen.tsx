@@ -5,7 +5,6 @@ import { useLikedVideos } from "@/stores/use-liked-videos";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 type Props = {};
 
@@ -21,11 +20,7 @@ const LikedVideosScreen = (props: Props) => {
     },
   });
 
-  return (
-    <SafeAreaView edges={["top"]} style={{ flex: 1 }}>
-      <Feed videos={data} startID={startID} />
-    </SafeAreaView>
-  );
+  return <Feed videos={data} startID={startID} />;
 };
 
 export default LikedVideosScreen;

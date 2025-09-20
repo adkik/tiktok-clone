@@ -2,8 +2,9 @@ import { ProfileStackParamList } from "@/navigators/ProfileStackNavigator";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { FlashList } from "@shopify/flash-list";
 import React from "react";
-import { Pressable, View } from "react-native";
+import { Pressable } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
+import { Container } from "./Container";
 import VideoThumbnail from "./VideoThumbnail";
 
 type Props = {
@@ -16,7 +17,7 @@ const Grid = ({ videoIDs }: Props) => {
   const navigation = useNavigation<ProfileNav>();
 
   return (
-    <View style={styles.container}>
+    <Container>
       <FlashList
         style={styles.grid}
         data={videoIDs}
@@ -32,19 +33,14 @@ const Grid = ({ videoIDs }: Props) => {
           </Pressable>
         )}
       />
-    </View>
+    </Container>
   );
 };
 
 export default Grid;
 
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    padding: 1,
-    flex: 1,
-  },
+const styles = StyleSheet.create((theme, rt) => ({
   grid: {
     flex: 1,
   },
-});
+}));

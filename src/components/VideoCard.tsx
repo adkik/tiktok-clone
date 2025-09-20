@@ -2,14 +2,16 @@ import { useThumbnails } from "@/stores/use-thumbnails";
 import { Video as VideoType } from "@/types";
 import { generateThumbnail } from "@/utils/generate-thumbnail";
 import { Ionicons } from "@expo/vector-icons";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useIsFocused } from "@react-navigation/native";
 import { useEventListener } from "expo";
 import { useVideoPlayer, VideoView } from "expo-video";
 import React, { useEffect, useState } from "react";
-import { Dimensions, Pressable, Text, View } from "react-native";
+import { Dimensions, Pressable, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import LikeButton from "./LikeButton";
+import { Typography } from "./Typography";
+import { Container } from "./Container";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 type Props = {
   video: VideoType;
@@ -19,10 +21,10 @@ type Props = {
 const { height } = Dimensions.get("window");
 
 const VideoCard = ({ video, isActive }: Props) => {
-  const tabBarHeight = useBottomTabBarHeight();
-  const itemHeight = height - tabBarHeight;
   const [paused, setPaused] = useState(false);
   const isFocused = useIsFocused();
+  const tabBarHeight = useBottomTabBarHeight();
+  const adjustedHeight = height - tabBarHeight;
 
   const thumbnails = useThumbnails();
 
@@ -57,7 +59,7 @@ const VideoCard = ({ video, isActive }: Props) => {
   }
 
   return (
-    <View style={[styles.container, { height: itemHeight }]}>
+    <View style={{ height: adjustedHeight, flex: 1 }}>
       <Pressable onPress={pause} style={[styles.videoWrapper]}>
         <VideoView
           player={player}
@@ -66,9 +68,9 @@ const VideoCard = ({ video, isActive }: Props) => {
           nativeControls={false}
         />
       </Pressable>
-      <Text style={[styles.caption, { color: "#fff", fontSize: 16 }]}>
+      <Typography isCaption size="medium" style={styles.caption}>
         {video.caption}
-      </Text>
+      </Typography>
       <LikeButton id={video.id} />
       {paused ? (
         <Pressable style={styles.playButton} onPress={play}>
@@ -81,7 +83,7 @@ const VideoCard = ({ video, isActive }: Props) => {
 
 export default VideoCard;
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme, rt) => ({
   container: {
     width: "100%",
   },
@@ -94,9 +96,8 @@ const styles = StyleSheet.create({
   },
   caption: {
     position: "absolute",
-    bottom: 80,
+    bottom: rt.insets.bottom + 30,
     left: 15,
-    fontFamily: "Vercetti-Regular",
   },
   playButton: {
     position: "absolute",
@@ -111,4 +112,4 @@ const styles = StyleSheet.create({
     opacity: 0.45,
     color: "#fff",
   },
-});
+}));

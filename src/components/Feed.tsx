@@ -1,10 +1,10 @@
 import VideoCard from "@/components/VideoCard";
 import { Video } from "@/types";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { FlashList } from "@shopify/flash-list";
 import React, { useMemo, useRef, useState } from "react";
 import { Dimensions, View, ViewToken } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 type Props = {
   videos: Video[] | undefined;
@@ -14,9 +14,9 @@ const { height } = Dimensions.get("window");
 
 const Feed = ({ videos, startID = "0" }: Props) => {
   const [currentId, setCurrentId] = useState<string | null>(null);
-
   const tabBarHeight = useBottomTabBarHeight();
-  const itemHeight = height - tabBarHeight;
+  const adjustedHeight = height - tabBarHeight;
+  const { rt } = useUnistyles();
 
   const onViewableItemsChanged = useRef(
     ({ viewableItems }: { viewableItems: ViewToken[] }) => {
@@ -39,13 +39,13 @@ const Feed = ({ videos, startID = "0" }: Props) => {
   }, [videos, startID]);
 
   return (
-    <View style={[styles.container]}>
+    <View style={styles.container}>
       <FlashList<Video>
         keyExtractor={(item) => item.id}
         data={videos}
-        style={styles.feed}
+        style={styles.list}
         pagingEnabled
-        snapToInterval={itemHeight}
+        snapToInterval={adjustedHeight}
         initialScrollIndex={initialIndex}
         decelerationRate="fast"
         disableIntervalMomentum={true}
@@ -62,11 +62,16 @@ const Feed = ({ videos, startID = "0" }: Props) => {
 
 export default Feed;
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme, rt) => ({
   container: {
     flex: 1,
+    paddingTop: rt.insets.top,
+    paddingLeft: rt.insets.left,
+    paddingRight: rt.insets.right,
+    backgroundColor: theme.colors.backgroundColor,
   },
-  feed: {
+  list: {
     flex: 1,
+    width: "100%",
   },
-});
+}));

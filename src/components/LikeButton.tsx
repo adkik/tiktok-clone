@@ -1,7 +1,8 @@
 import { useLikedVideos } from "@/stores/use-liked-videos";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { Dimensions, Pressable, StyleSheet } from "react-native";
+import { Dimensions, Pressable } from "react-native";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 type Props = {
   id: string;
@@ -11,6 +12,7 @@ const { height } = Dimensions.get("window");
 
 const LikeButton = ({ id }: Props) => {
   const { isLiked, toggleLike } = useLikedVideos();
+  const { theme } = useUnistyles();
 
   const liked = isLiked(id);
   return (
@@ -18,7 +20,7 @@ const LikeButton = ({ id }: Props) => {
       <Ionicons
         name={"heart"}
         size={60}
-        color={liked ? "red" : "#fff"}
+        color={liked ? theme.colors.accent : "#fff"}
         style={styles.icon}
       />
     </Pressable>
@@ -27,7 +29,7 @@ const LikeButton = ({ id }: Props) => {
 
 export default LikeButton;
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme, rt) => ({
   button: {
     position: "absolute",
     bottom: 40,
@@ -41,4 +43,4 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
   },
-});
+}));
