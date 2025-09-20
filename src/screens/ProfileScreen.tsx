@@ -1,14 +1,23 @@
+import Grid from "@/components/Grid";
+import { useLikedVideos } from "@/stores/use-liked-videos";
 import React from "react";
-import { Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet } from "react-native-unistyles";
 
-type Props = {};
+const ProfileScreen = () => {
+  const { liked } = useLikedVideos();
 
-const ProfileScreen = (props: Props) => {
   return (
-    <View>
-      <Text>ProfileScreen</Text>
-    </View>
+    <SafeAreaView edges={["top"]} style={styles.container}>
+      <Grid videoIDs={liked} />
+    </SafeAreaView>
   );
 };
 
 export default ProfileScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

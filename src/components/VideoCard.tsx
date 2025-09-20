@@ -1,5 +1,6 @@
-import { useLikedVideos } from "@/store";
+import { useThumbnails } from "@/stores/use-thumbnails";
 import { Video as VideoType } from "@/types";
+import { generateThumbnail } from "@/utils/generate-thumbnail";
 import { Ionicons } from "@expo/vector-icons";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useIsFocused } from "@react-navigation/native";
@@ -23,15 +24,16 @@ const VideoCard = ({ video, isActive }: Props) => {
   const [paused, setPaused] = useState(false);
   const isFocused = useIsFocused();
 
-  const { generateAndCache } = useLikedVideos();
+  const thumbnails = useThumbnails();
 
   const player = useVideoPlayer(video.url, async (player) => {
     player.loop = true;
   });
 
-  useEventListener(player, "statusChange", ({ status }) => {
+  useEventListener(player, "statusChange", async ({ status }) => {
     if (status === "readyToPlay") {
-      generateAndCache(video.id, video.url);
+      const uri = await generateThumbnail(video.url);
+      if (uri) thumbnails.set(video.id, uri);
     }
   });
 
@@ -43,7 +45,7 @@ const VideoCard = ({ video, isActive }: Props) => {
     } else {
       player?.pause();
     }
-  }, [isActive, isFocused]);
+  }, [isActive, isFocused, player]);
 
   function play() {
     player.play();

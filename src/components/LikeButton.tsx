@@ -1,4 +1,4 @@
-import { useLikedVideos } from "@/store";
+import { useLikedVideos } from "@/stores/use-liked-videos";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Pressable, StyleSheet } from "react-native";
