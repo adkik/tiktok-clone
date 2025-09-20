@@ -22,7 +22,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <NavigationContainer
           onReady={() => {
-            BootSplash.hide();
+            BootSplash.hide({ fade: true });
           }}
         >
           <Tab.Navigator
