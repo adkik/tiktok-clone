@@ -6,25 +6,21 @@ import { useIsFocused } from "@react-navigation/native";
 import { useEventListener } from "expo";
 import { useVideoPlayer, VideoView } from "expo-video";
 import React, { useEffect, useState } from "react";
-import { Dimensions, Pressable, View } from "react-native";
+import { Pressable, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import LikeButton from "./LikeButton";
 import { Typography } from "./Typography";
-import { Container } from "./Container";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { useAdjustedHeight } from "@/hooks/useAdjustedHeight";
 
 type Props = {
   video: VideoType;
   isActive: boolean;
 };
 
-const { height } = Dimensions.get("window");
-
 const VideoCard = ({ video, isActive }: Props) => {
   const [paused, setPaused] = useState(false);
   const isFocused = useIsFocused();
-  const tabBarHeight = useBottomTabBarHeight();
-  const adjustedHeight = height - tabBarHeight;
+  const adjustedHeight = useAdjustedHeight();
 
   const thumbnails = useThumbnails();
 

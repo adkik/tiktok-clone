@@ -2,21 +2,19 @@ import VideoCard from "@/components/VideoCard";
 import { Video } from "@/types";
 import { FlashList } from "@shopify/flash-list";
 import React, { useMemo, useRef, useState } from "react";
-import { Dimensions, View, ViewToken } from "react-native";
+import { View, ViewToken } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { getInitialIndex } from "@/utils/get-initial-index";
+import { useAdjustedHeight } from "@/hooks/useAdjustedHeight";
 
 type Props = {
   videos: Video[] | undefined;
   startID?: string;
 };
-const { height } = Dimensions.get("window");
 
 const Feed = ({ videos, startID = "0" }: Props) => {
   const [currentId, setCurrentId] = useState<string | null>(null);
-  const tabBarHeight = useBottomTabBarHeight();
-  const adjustedHeight = height - tabBarHeight;
+  const adjustedHeight = useAdjustedHeight();
 
   const onViewableItemsChanged = useRef(
     ({ viewableItems }: { viewableItems: ViewToken[] }) => {
