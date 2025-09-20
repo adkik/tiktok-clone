@@ -68,7 +68,7 @@ const VideoCard = ({ video, isActive }: Props) => {
           nativeControls={false}
         />
       </Pressable>
-      <Typography isCaption size="medium" style={styles.caption}>
+      <Typography isCaption style={styles.caption}>
         {video.caption}
       </Typography>
       <LikeButton id={video.id} />
@@ -96,7 +96,7 @@ const styles = StyleSheet.create((theme, rt) => ({
   },
   caption: {
     position: "absolute",
-    bottom: rt.insets.bottom + 30,
+    bottom: rt.insets.bottom + 40,
     left: 15,
   },
   playButton: {

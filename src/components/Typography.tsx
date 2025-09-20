@@ -25,16 +25,13 @@ export const Typography: FunctionComponent<TypographyProps> = ({
     size,
   });
 
-  return <Text style={[styles.title(), style]}>{children}</Text>;
+  return <Text style={[styles.title, style]}>{children}</Text>;
 };
 
 const styles = StyleSheet.create((theme, rt) => ({
-  title: () => ({
+  title: {
     fontFamily: "Vercetti-Regular",
     variants: {
-      isCaption: {
-        true: { color: "#FFFFFF" }, // always white
-      },
       isBold: {
         true: {
           fontWeight: "bold",
@@ -53,12 +50,15 @@ const styles = StyleSheet.create((theme, rt) => ({
           color: theme.colors.typography,
         },
       },
+      isCaption: {
+        true: { color: "#fff" },
+        default: {
+          color: "#fff",
+        },
+      },
       size: {
         small: {
           fontSize: rt.fontScale * 10,
-        },
-        medium: {
-          fontSize: rt.fontScale * 16,
         },
         large: {
           fontSize: rt.fontScale * 30,
@@ -68,5 +68,5 @@ const styles = StyleSheet.create((theme, rt) => ({
         },
       },
     },
-  }),
+  },
 }));
