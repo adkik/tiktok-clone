@@ -5,6 +5,7 @@ import { useLikedVideos } from "@/stores/use-liked-videos";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 type Props = {};
 
@@ -16,11 +17,15 @@ const LikedVideosScreen = (props: Props) => {
   const { data } = useQuery({
     queryKey: ["liked_videos"],
     queryFn: async () => {
-      return (await fetchVideos()).filter(({ id }) => liked.includes(id));
+      return (await fetchVideos()).filter(({ id }) => liked.has(id));
     },
   });
 
-  return <Feed videos={data} startID={startID} />;
+  return (
+    <GestureHandlerRootView>
+      <Feed videos={data} startID={startID} />
+    </GestureHandlerRootView>
+  );
 };
 
 export default LikedVideosScreen;

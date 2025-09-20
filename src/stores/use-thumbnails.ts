@@ -10,7 +10,7 @@ type ThumbnailsStoreState = {
   set: (id: string, uri: string) => void;
 };
 
-type SerializedCache = [string, string | null][]; // Array of [id, uri]
+type SerializedCache = [string, string | null][];
 
 export const useThumbnails = create<ThumbnailsStoreState>()(
   persist(

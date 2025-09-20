@@ -65,10 +65,9 @@ const VideoCard = ({ video, isActive }: Props) => {
     }
   }
 
-  const likeTap = useMemo(
-    () => Gesture.Tap().onBegin(() => scheduleOnRN(toggleLike, video.id)),
-    [toggleLike]
-  );
+  const likeTap = Gesture.Tap().onBegin(() => {
+    scheduleOnRN(toggleLike, video.id);
+  });
 
   const doubleTap = useMemo(
     () =>
@@ -141,7 +140,7 @@ const styles = StyleSheet.create((theme, rt) => ({
     alignItems: "center",
   },
   playButtonIcon: {
-    opacity: 0.45,
+    opacity: 0.5,
     color: "#fff",
   },
 }));

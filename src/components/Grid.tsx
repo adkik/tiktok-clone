@@ -1,14 +1,15 @@
+import React from "react";
 import { ProfileStackParamList } from "@/navigators/ProfileStackNavigator";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { FlashList } from "@shopify/flash-list";
-import React from "react";
 import { Pressable } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { Container } from "./Container";
 import VideoThumbnail from "./VideoThumbnail";
+import { LikedVideoEntry } from "@/stores/use-liked-videos";
 
 type Props = {
-  videoIDs: string[] | undefined;
+  videoIDs: LikedVideoEntry[] | undefined;
 };
 
 type ProfileNav = NavigationProp<ProfileStackParamList>;
@@ -21,15 +22,15 @@ const Grid = ({ videoIDs }: Props) => {
       <FlashList
         style={styles.grid}
         data={videoIDs}
-        keyExtractor={(item) => item}
+        keyExtractor={(item) => item.id}
         numColumns={3}
         renderItem={({ item }) => (
           <Pressable
             onPress={() =>
-              navigation.navigate("LikedVideos", { startID: item })
+              navigation.navigate("LikedVideos", { startID: item.id })
             }
           >
-            <VideoThumbnail id={item} />
+            <VideoThumbnail id={item.id} />
           </Pressable>
         )}
       />

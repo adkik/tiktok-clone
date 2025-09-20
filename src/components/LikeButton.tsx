@@ -13,10 +13,8 @@ type Props = {
 const { height } = Dimensions.get("window");
 
 const LikeButton = ({ id, onTap }: Props) => {
-  const { isLiked } = useLikedVideos();
+  const liked = useLikedVideos((s) => s.liked.has(id));
   const { theme } = useUnistyles();
-
-  const liked = isLiked(id);
 
   return (
     <GestureDetector gesture={onTap}>
@@ -39,8 +37,8 @@ const styles = StyleSheet.create((theme, rt) => ({
     position: "absolute",
     bottom: 40,
     right: 15,
-    top: height / 2, // halfway down the visible area
-    transform: [{ translateY: -40 }], // shift up so icon stack is truly centered
+    top: height / 2,
+    transform: [{ translateY: -40 }],
     alignItems: "center",
   },
   icon: {

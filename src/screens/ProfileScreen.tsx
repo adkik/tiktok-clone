@@ -1,11 +1,16 @@
 import Grid from "@/components/Grid";
 import { useLikedVideos } from "@/stores/use-liked-videos";
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 
 const ProfileScreen = () => {
-  const { liked } = useLikedVideos();
+  const liked = useLikedVideos((state) => state.liked);
 
-  return <Grid videoIDs={liked} />;
+  const sortedLiked = useMemo(
+    () => [...liked.values()].sort((a, b) => b.addedAt - a.addedAt),
+    [liked]
+  );
+
+  return <Grid videoIDs={sortedLiked} />;
 };
 
 export default ProfileScreen;
