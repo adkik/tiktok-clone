@@ -1,7 +1,8 @@
 import { useThumbnails } from "@/stores/use-thumbnails";
 import { Image } from "expo-image";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
+import { StyleSheet } from "react-native-unistyles";
 
 type Props = {
   id: string;
@@ -27,16 +28,18 @@ const VideoThumbnail = ({ id }: Props) => {
 
 export default VideoThumbnail;
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
     height: 200,
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
+    borderWidth: 0.5,
+    borderColor: theme.colors.backgroundColor,
   },
   thumbnail: {
     flex: 1,
     width: "100%",
   },
-});
+}));
