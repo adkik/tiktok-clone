@@ -1,29 +1,34 @@
 import { useLikedVideos } from "@/stores/use-liked-videos";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { Dimensions, Pressable } from "react-native";
+import { Dimensions, View } from "react-native";
+import { GestureDetector, GestureType } from "react-native-gesture-handler";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 type Props = {
   id: string;
+  onTap: GestureType;
 };
 
 const { height } = Dimensions.get("window");
 
-const LikeButton = ({ id }: Props) => {
-  const { isLiked, toggleLike } = useLikedVideos();
+const LikeButton = ({ id, onTap }: Props) => {
+  const { isLiked } = useLikedVideos();
   const { theme } = useUnistyles();
 
   const liked = isLiked(id);
+
   return (
-    <Pressable style={styles.button} onPress={() => toggleLike(id)}>
-      <Ionicons
-        name={"heart"}
-        size={60}
-        color={liked ? theme.colors.accent : "#fff"}
-        style={styles.icon}
-      />
-    </Pressable>
+    <GestureDetector gesture={onTap}>
+      <View style={styles.button}>
+        <Ionicons
+          name={"heart"}
+          size={60}
+          color={liked ? theme.colors.accent : "#fff"}
+          style={styles.icon}
+        />
+      </View>
+    </GestureDetector>
   );
 };
 

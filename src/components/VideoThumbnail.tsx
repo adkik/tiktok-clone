@@ -13,7 +13,11 @@ const VideoThumbnail = ({ id }: Props) => {
   return (
     <View style={styles.container}>
       {uri ? (
-        <Image source={uri} style={styles.thumbnail} />
+        <Image
+          source={uri}
+          style={styles.thumbnail}
+          cachePolicy={"memory-disk"}
+        />
       ) : (
         <Text>Loading...</Text>
       )}

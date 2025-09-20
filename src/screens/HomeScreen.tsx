@@ -2,6 +2,7 @@ import Feed from "@/components/Feed";
 import { fetchVideos } from "@/services/fetch-videos";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const HomeScreen = () => {
   const { data } = useQuery({
@@ -9,7 +10,11 @@ const HomeScreen = () => {
     queryFn: fetchVideos,
   });
 
-  return <Feed videos={data} />;
+  return (
+    <GestureHandlerRootView>
+      <Feed videos={data} />;
+    </GestureHandlerRootView>
+  );
 };
 
 export default HomeScreen;
