@@ -17,32 +17,32 @@ describe("generateThumbnail", () => {
   it("returns a URI on success", async () => {
     getThumbnailAsync.mockResolvedValueOnce({ uri: "mock-uri.png" });
 
-    const result = await generateThumbnail(EXAMPLE_URI, 5000);
+    const result = await generateThumbnail(EXAMPLE_URI, 6);
 
     expect(getThumbnailAsync).toHaveBeenCalledWith(
       EXAMPLE_URI,
 
-      { time: 3000 }
+      { time: 5000 }
     );
     expect(result).toBe("mock-uri.png");
   });
 
-  it("clamps time when video is shorter than 3s", async () => {
+  it("clamps time when video is shorter than 5s", async () => {
     getThumbnailAsync.mockResolvedValueOnce({ uri: "mock-uri.png" });
 
-    await generateThumbnail("http://example.com/video.mp4", 2000);
+    await generateThumbnail("http://example.com/video.mp4", 2);
 
     expect(getThumbnailAsync).toHaveBeenCalledWith(
       EXAMPLE_URI,
 
-      { time: 1500 }
+      { time: 1500 } // 2 * 1000 - 500
     );
   });
 
   it("never uses a negative time when video is very short", async () => {
     getThumbnailAsync.mockResolvedValueOnce({ uri: "mock-uri.png" });
 
-    await generateThumbnail(EXAMPLE_URI, 300);
+    await generateThumbnail(EXAMPLE_URI, 0.3);
 
     expect(getThumbnailAsync).toHaveBeenCalledWith(EXAMPLE_URI, { time: 0 });
   });
