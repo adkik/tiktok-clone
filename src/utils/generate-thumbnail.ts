@@ -22,6 +22,7 @@ export async function generateThumbnail(url: string, duration: number) {
     });
     return uri;
   } catch (e) {
+    console.warn(e);
     return null;
   }
 }

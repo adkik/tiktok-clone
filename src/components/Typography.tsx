@@ -1,5 +1,5 @@
-import type { FunctionComponent, PropsWithChildren } from "react";
 import React from "react";
+import type { FunctionComponent, PropsWithChildren } from "react";
 import { StyleProp, Text, TextProps, TextStyle } from "react-native";
 import type { UnistylesVariants } from "react-native-unistyles";
 import { StyleSheet } from "react-native-unistyles";
@@ -53,7 +53,7 @@ const styles = StyleSheet.create((theme, rt) => ({
           color: theme.colors.accent,
         },
         default: {
-          color: theme.colors.typography,
+          color: "theme.colors.typography",
         },
       },
       isCaption: {

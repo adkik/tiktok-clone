@@ -12,7 +12,7 @@ const LikedVideosScreen = () => {
   const { liked } = useLikedVideos();
   const { startID } = route.params ?? {};
 
-  const { data } = useQuery({
+  const { data, isError, isLoading, refetch } = useQuery({
     queryKey: ["liked_videos"],
     queryFn: async () => {
       const allVideos = await fetchVideos();
@@ -30,7 +30,13 @@ const LikedVideosScreen = () => {
 
   return (
     <GestureHandlerRootView>
-      <Feed videos={data} startID={startID} />
+      <Feed
+        videos={data}
+        startID={startID}
+        isError={isError}
+        isLoading={isLoading}
+        refetch={refetch}
+      />
     </GestureHandlerRootView>
   );
 };

@@ -1,18 +1,34 @@
+import React, { useMemo, useRef, useState } from "react";
 import VideoCard from "@/components/VideoCard";
 import { Video } from "@/types";
 import { FlashList } from "@shopify/flash-list";
-import React, { useMemo, useRef, useState } from "react";
-import { AccessibilityInfo, View, ViewToken } from "react-native";
+import {
+  AccessibilityInfo,
+  ActivityIndicator,
+  Pressable,
+  View,
+  ViewToken,
+} from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { getInitialIndex } from "@/utils/get-initial-index";
 import { useAdjustedHeight } from "@/hooks/useAdjustedHeight";
+import { Typography } from "./Typography";
 
 type Props = {
   videos: Video[] | undefined;
   startID?: string;
+  isError: boolean;
+  isLoading: boolean;
+  refetch: () => void;
 };
 
-const Feed = ({ videos, startID = "0" }: Props) => {
+const Feed = ({
+  videos,
+  isError,
+  isLoading,
+  refetch,
+  startID = "0",
+}: Props) => {
   const [currentId, setCurrentId] = useState<string | null>(null);
   const adjustedHeight = useAdjustedHeight();
 
@@ -36,6 +52,27 @@ const Feed = ({ videos, startID = "0" }: Props) => {
     () => getInitialIndex(videos, startID),
     [videos, startID]
   );
+
+  if (isError) {
+    return (
+      <View style={[styles.container, styles.centered]}>
+        <Typography isCentered style={{ color: "#000" }}>
+          Something went wrong. Please try again
+        </Typography>
+        <Pressable onPress={refetch}>
+          <Typography style={styles.retry}>Tap to retry</Typography>
+        </Pressable>
+      </View>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <View style={[styles.container, styles.centered]}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container} accessible={false}>
@@ -69,8 +106,21 @@ const styles = StyleSheet.create((theme, rt) => ({
     paddingRight: rt.insets.right,
     backgroundColor: theme.colors.backgroundColor,
   },
+  centered: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: 26,
+    paddingRight: 26,
+    gap: 10,
+  },
   list: {
     flex: 1,
     width: "100%",
   },
+  errorText: {
+    color: theme.colors.salmon,
+    textAlign: "center",
+    marginBottom: 8,
+  },
+  retry: { color: theme.colors.accent, textDecorationLine: "underline" },
 }));
