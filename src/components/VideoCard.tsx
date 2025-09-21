@@ -86,43 +86,48 @@ const VideoCard = ({ video, isActive }: Props) => {
         .onEnd(() => {
           scheduleOnRN(togglePlay);
         }),
-    [togglePlay, doubleTap, likeTap]
+    [togglePlay, doubleTap]
   );
 
-  const composed = Gesture.Exclusive(doubleTap, singleTap);
+  const composed = Gesture.Simultaneous(
+    likeTap,
+    Gesture.Exclusive(doubleTap, singleTap)
+  );
 
   return (
-    <GestureDetector gesture={composed}>
-      <View
-        style={{ height: adjustedHeight, flex: 1 }}
-        accessible
-        accessibilityRole="image" // TikTok treats video as an image element
-        accessibilityLabel={video.caption}
-        accessibilityHint="Tap to toggle playback, double tap to like"
-      >
-        <VideoView
-          player={player}
-          style={[styles.video]}
-          contentFit="cover"
-          nativeControls={false}
-        />
-        <Typography isCaption style={styles.caption} accessible={false}>
-          {video.caption}
-        </Typography>
-        <LikeButton id={video.id} onTap={likeTap} />
-        {paused ? (
-          <View
-            style={styles.playButton}
-            accessible
-            accessibilityRole="button"
-            accessibilityLabel="Play video"
-            onAccessibilityTap={play}
-          >
-            <Ionicons name={"play"} size={80} style={styles.playButtonIcon} />
-          </View>
-        ) : null}
-      </View>
-    </GestureDetector>
+    <View style={{ height: adjustedHeight, flex: 1 }}>
+      <GestureDetector gesture={composed}>
+        <View
+          style={{ flex: 1 }}
+          accessible
+          accessibilityRole="image" // TikTok treats video as an image element
+          accessibilityLabel={video.caption}
+          accessibilityHint="Tap to toggle playback, double tap to like"
+        >
+          <VideoView
+            player={player}
+            style={[styles.video]}
+            contentFit="cover"
+            nativeControls={false}
+          />
+          {paused ? (
+            <View
+              style={styles.playButton}
+              accessible
+              accessibilityRole="button"
+              accessibilityLabel="Play video"
+              onAccessibilityTap={play}
+            >
+              <Ionicons name={"play"} size={80} style={styles.playButtonIcon} />
+            </View>
+          ) : null}
+        </View>
+      </GestureDetector>
+      <Typography isCaption style={styles.caption} accessible={false}>
+        {video.caption}
+      </Typography>
+      <LikeButton id={video.id} onTap={likeTap} />
+    </View>
   );
 };
 
