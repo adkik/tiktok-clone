@@ -70,7 +70,7 @@ const LikeButton = ({ id, onTap }: Props) => {
       >
         <AnimatedIonicon
           name={"heart"}
-          size={60}
+          size={45}
           color={liked ? theme.colors.accent : "#fff"}
           style={[styles.icon, animatedStyle]}
         />
@@ -87,7 +87,7 @@ const styles = StyleSheet.create((theme, rt) => ({
   button: {
     position: "absolute",
     bottom: 40,
-    right: 15,
+    right: 5,
     top: height / 2,
     transform: [{ translateY: -40 }],
     alignItems: "center",
