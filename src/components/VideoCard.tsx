@@ -89,10 +89,7 @@ const VideoCard = ({ video, isActive }: Props) => {
     [togglePlay, doubleTap]
   );
 
-  const composed = Gesture.Simultaneous(
-    likeTap,
-    Gesture.Exclusive(doubleTap, singleTap)
-  );
+  const composed = Gesture.Exclusive(doubleTap, singleTap);
 
   return (
     <View style={{ height: adjustedHeight, flex: 1 }}>
