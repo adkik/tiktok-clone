@@ -2,6 +2,7 @@ import { Thumbnail } from "@/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { mmkvStorage } from "./storage";
+import { persistMerge } from "@/utils/persist-merge";
 
 type ThumbnailsStoreState = {
   cache: Map<string, string | null>;
@@ -9,8 +10,6 @@ type ThumbnailsStoreState = {
   get: (id: string) => string | undefined | null;
   set: (id: string, uri: string) => void;
 };
-
-type SerializedCache = [string, string | null][];
 
 export const useThumbnails = create<ThumbnailsStoreState>()(
   persist(
@@ -35,12 +34,7 @@ export const useThumbnails = create<ThumbnailsStoreState>()(
       partialize: (state) => ({
         cache: [...state.cache.entries()],
       }),
-      merge: (persisted: unknown, current: ThumbnailsStoreState) => {
-        const restored = new Map(
-          (persisted as { cache?: SerializedCache }).cache ?? []
-        );
-        return { ...current, cache: restored };
-      },
+      merge: (persisted, current) => persistMerge(persisted, current, "cache"),
     }
   )
 );
