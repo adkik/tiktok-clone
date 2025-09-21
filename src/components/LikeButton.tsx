@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { GestureDetector, GestureType } from "react-native-gesture-handler";
+import {
+  GestureDetector,
+  GestureType,
+  SimultaneousGesture,
+} from "react-native-gesture-handler";
 import { useLikedVideos } from "@/stores/use-liked-videos";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 import Animated, {
@@ -14,7 +18,7 @@ import Animated, {
 
 type Props = {
   id: string;
-  onTap: GestureType;
+  onTap: SimultaneousGesture;
 };
 
 const { height } = Dimensions.get("window");

@@ -65,7 +65,7 @@ const VideoCard = ({ video, isActive }: Props) => {
     }
   }
 
-  const likeTap = Gesture.Tap().onBegin(() => {
+  const likeTap = Gesture.Tap().onEnd(() => {
     scheduleOnRN(toggleLike, video.id);
   });
 
@@ -83,7 +83,6 @@ const VideoCard = ({ video, isActive }: Props) => {
     () =>
       Gesture.Tap()
         .requireExternalGestureToFail(doubleTap)
-        .requireExternalGestureToFail(likeTap)
         .onEnd(() => {
           scheduleOnRN(togglePlay);
         }),
