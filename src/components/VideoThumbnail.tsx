@@ -1,7 +1,7 @@
+import React from "react";
 import { useThumbnails } from "@/stores/use-thumbnails";
 import { Image } from "expo-image";
-import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
 type Props = {
@@ -20,7 +20,7 @@ const VideoThumbnail = ({ id }: Props) => {
           cachePolicy={"memory-disk"}
         />
       ) : (
-        <Text>Loading...</Text>
+        <View style={styles.loading} />
       )}
     </View>
   );
@@ -41,5 +41,10 @@ const styles = StyleSheet.create((theme) => ({
   thumbnail: {
     flex: 1,
     width: "100%",
+  },
+  loading: {
+    flex: 1,
+    width: "100%",
+    backgroundColor: theme.colors.gray,
   },
 }));
