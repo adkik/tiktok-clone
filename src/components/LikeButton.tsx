@@ -89,6 +89,7 @@ const styles = StyleSheet.create((theme, rt) => ({
     bottom: 40,
     right: 5,
     top: height / 2,
+    height: 45,
     transform: [{ translateY: -40 }],
     alignItems: "center",
   },
