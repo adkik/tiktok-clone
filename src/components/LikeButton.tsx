@@ -43,7 +43,7 @@ const LikeButton = ({ id, onTap }: Props) => {
       duration: 200,
       easing: Easing.inOut(Easing.ease),
     });
-  }, [liked]);
+  }, [liked, progress, scale]);
 
   const animatedStyle = useAnimatedStyle(() => {
     const color = interpolateColor(

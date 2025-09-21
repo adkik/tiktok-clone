@@ -60,13 +60,6 @@ const VideoCard = ({ video, isActive }: Props) => {
     player.pause();
     setPaused(true);
   }
-  function togglePlay() {
-    if (player.playing) {
-      pause();
-    } else {
-      play();
-    }
-  }
 
   const likeTap = Gesture.Tap().onEnd(() => {
     scheduleOnRN(toggleLike, video.id);
@@ -82,15 +75,21 @@ const VideoCard = ({ video, isActive }: Props) => {
     [toggleLike, video.id]
   );
 
-  const singleTap = useMemo(
-    () =>
-      Gesture.Tap()
-        .requireExternalGestureToFail(doubleTap)
-        .onEnd(() => {
-          scheduleOnRN(togglePlay);
-        }),
-    [togglePlay, doubleTap]
-  );
+  const singleTap = useMemo(() => {
+    function togglePlay() {
+      if (player.playing) {
+        pause();
+      } else {
+        play();
+      }
+    }
+
+    return Gesture.Tap()
+      .requireExternalGestureToFail(doubleTap)
+      .onEnd(() => {
+        scheduleOnRN(togglePlay);
+      });
+  }, [doubleTap]);
 
   const composed = Gesture.Exclusive(doubleTap, singleTap);
 

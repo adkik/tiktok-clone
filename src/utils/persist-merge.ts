@@ -5,7 +5,7 @@
  * Used in `PersistOptions.merge`
  *
  */
-export function persistMerge<T extends Object, K extends keyof T>(
+export function persistMerge<T extends object, K extends keyof T>(
   persisted: unknown,
   current: T,
   key: K
