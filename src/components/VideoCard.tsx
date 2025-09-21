@@ -34,8 +34,11 @@ const VideoCard = ({ video, isActive }: Props) => {
 
   useEventListener(player, "statusChange", async ({ status }) => {
     if (status === "readyToPlay") {
-      const uri = await generateThumbnail(video.url, player.duration);
-      if (uri) thumbnails.set(video.id, uri);
+      const existing = thumbnails.get(video.id);
+      if (!existing) {
+        const uri = await generateThumbnail(video.url, player.duration);
+        if (uri) thumbnails.set(video.id, uri);
+      }
     }
   });
 
