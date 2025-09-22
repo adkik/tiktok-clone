@@ -71,7 +71,7 @@ const LikeButton = ({ id, onTap }: Props) => {
         <AnimatedIonicon
           name={"heart"}
           size={45}
-          color={liked ? theme.colors.accent : "#fff"}
+          color={theme.colors.heartIcon(liked)}
           style={[styles.icon, animatedStyle]}
         />
       </Animated.View>
