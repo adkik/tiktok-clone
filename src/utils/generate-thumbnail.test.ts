@@ -5,6 +5,11 @@ jest.mock("expo-video-thumbnails", () => ({
   getThumbnailAsync: jest.fn(),
 }));
 
+// suppress warnings
+beforeEach(() => {
+  jest.spyOn(console, "warn").mockImplementation(() => {});
+});
+
 const EXAMPLE_URI = "http://example.com/video.mp4";
 
 describe("generateThumbnail", () => {
