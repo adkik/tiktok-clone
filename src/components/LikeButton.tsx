@@ -69,6 +69,7 @@ const LikeButton = ({ id, onTap }: Props) => {
         accessibilityHint={liked ? "Tap to unlike" : "Tap to like"}
       >
         <AnimatedIonicon
+          testID={"heart-icon"}
           name={"heart"}
           size={45}
           color={theme.colors.heartIcon(liked)}

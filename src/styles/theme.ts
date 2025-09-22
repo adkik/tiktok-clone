@@ -1,11 +1,11 @@
 import { StyleSheet } from "react-native-unistyles";
 
-const sharedColors = {
+export const sharedColors = {
   salmon: "#ff6b6b",
   heartIcon: (liked: boolean) => (liked ? sharedColors.salmon : "#ffffff"),
 };
 
-const lightTheme = {
+export const lightTheme = {
   colors: {
     ...sharedColors,
     backgroundColor: "#ffffff",
