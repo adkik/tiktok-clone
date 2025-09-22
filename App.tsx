@@ -1,13 +1,14 @@
 import "@/styles/theme";
-import ProfileStackNavigator from "@/navigators/ProfileStackNavigator";
-import HomeScreen from "@/screens/HomeScreen";
-import { Ionicons } from "@expo/vector-icons";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { StatusBar } from "expo-status-bar";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useHomeTabOptions } from "@/navigators/useHomeTabOptions";
+import { useProfileTabOptions } from "@/navigators/useProfileTabOptions";
 import BootSplash from "react-native-bootsplash";
 import { useUnistyles } from "react-native-unistyles";
+import { StatusBar } from "expo-status-bar";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ProfileStackNavigator from "@/navigators/ProfileStackNavigator";
+import HomeScreen from "@/screens/HomeScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -15,6 +16,9 @@ const queryClient = new QueryClient();
 
 const App = () => {
   const { theme } = useUnistyles();
+
+  const profileTabOptions = useProfileTabOptions();
+  const homeTabOptions = useHomeTabOptions();
 
   return (
     <>
@@ -42,32 +46,12 @@ const App = () => {
             <Tab.Screen
               name="Home"
               component={HomeScreen}
-              options={{
-                tabBarActiveTintColor: theme.colors.icon,
-                tabBarInactiveTintColor: theme.colors.icon,
-                tabBarIcon: ({ color, focused }) => (
-                  <Ionicons
-                    name={focused ? "home" : "home-outline"}
-                    size={25}
-                    color={color}
-                  />
-                ),
-              }}
+              options={homeTabOptions}
             />
             <Tab.Screen
               name="Profile"
               component={ProfileStackNavigator}
-              options={{
-                tabBarActiveTintColor: theme.colors.icon,
-                tabBarInactiveTintColor: theme.colors.icon,
-                tabBarIcon: ({ color, focused }) => (
-                  <Ionicons
-                    name={focused ? "person" : "person-outline"}
-                    size={25}
-                    color={color}
-                  />
-                ),
-              }}
+              options={profileTabOptions}
             />
           </Tab.Navigator>
         </NavigationContainer>
