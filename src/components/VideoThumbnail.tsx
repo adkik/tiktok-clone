@@ -1,14 +1,15 @@
 import React from "react";
 import { useThumbnails } from "@/stores/use-thumbnails";
 import { Image } from "expo-image";
-import { View } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
+import { ActivityIndicator, View } from "react-native";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 type Props = {
   id: string;
 };
 
 const VideoThumbnail = ({ id }: Props) => {
+  const { theme } = useUnistyles();
   const uri = useThumbnails((s) => s.cache.get(id));
 
   return (
@@ -20,7 +21,12 @@ const VideoThumbnail = ({ id }: Props) => {
           cachePolicy={"memory-disk"}
         />
       ) : (
-        <View style={styles.loading} />
+        <View style={styles.loading}>
+          <ActivityIndicator
+            size="small"
+            color={theme.colors.activityIndicator}
+          />
+        </View>
       )}
     </View>
   );
@@ -46,5 +52,7 @@ const styles = StyleSheet.create((theme) => ({
     flex: 1,
     width: "100%",
     backgroundColor: theme.colors.gray,
+    justifyContent: "center",
+    alignItems: "center",
   },
 }));

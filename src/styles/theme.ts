@@ -14,6 +14,7 @@ export const lightTheme = {
     typography: "#000000",
     accent: sharedColors.salmon,
     gray: "#F1F1F1",
+    activityIndicator: "#000000",
   },
   gap: (v: number) => v * 8,
 };
@@ -27,6 +28,7 @@ const darkTheme = {
     typography: "#ffffff",
     icon: "#ffffff",
     accent: sharedColors.salmon,
+    activityIndicator: "#ffffff",
   },
   gap: (v: number) => v * 8,
 };
