@@ -19,14 +19,15 @@ const VideoThumbnail = ({ id }: Props) => {
           source={uri}
           style={styles.thumbnail}
           cachePolicy={"memory-disk"}
+          testID="thumbnail-image"
         />
       ) : (
-        <View style={styles.loading}>
-          <ActivityIndicator
-            size="small"
-            color={theme.colors.activityIndicator}
-          />
-        </View>
+        <ActivityIndicator
+          style={styles.loading}
+          testID="loading-indicator"
+          size="small"
+          color={theme.colors.activityIndicator}
+        />
       )}
     </View>
   );
