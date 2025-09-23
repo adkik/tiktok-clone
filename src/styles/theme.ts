@@ -1,5 +1,9 @@
 import { StyleSheet } from "react-native-unistyles";
 
+const fonts = {
+  base: "Vercetti-Regular",
+};
+
 export const sharedColors = {
   salmon: "#ff6b6b",
   heartIcon: (liked: boolean) => (liked ? sharedColors.salmon : "#ffffff"),
@@ -16,6 +20,7 @@ export const lightTheme = {
     gray: "#F1F1F1",
     activityIndicator: "#000000",
   },
+  fonts,
   gap: (v: number) => v * 8,
 };
 
@@ -30,6 +35,7 @@ const darkTheme = {
     accent: sharedColors.salmon,
     activityIndicator: "#ffffff",
   },
+  fonts,
   gap: (v: number) => v * 8,
 };
 
@@ -46,7 +52,6 @@ type AppThemes = {
   light: typeof lightTheme;
   dark: typeof darkTheme;
 };
-
 declare module "react-native-unistyles" {
   export interface UnistylesThemes extends AppThemes {}
   export interface UnistylesBreakpoints extends AppBreakpoints {}

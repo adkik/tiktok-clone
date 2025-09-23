@@ -36,7 +36,7 @@ export const Typography: FunctionComponent<TypographyProps> = ({
 
 const styles = StyleSheet.create((theme, rt) => ({
   title: {
-    fontFamily: "Vercetti-Regular",
+    fontFamily: theme.fonts.base,
     variants: {
       isBold: {
         true: {
