@@ -1,8 +1,6 @@
-import type { FunctionComponent, PropsWithChildren } from "react";
-import React from "react";
+import React, { type FunctionComponent, type PropsWithChildren } from "react";
 import { StyleProp, View, ViewStyle } from "react-native";
-import type { UnistylesVariants } from "react-native-unistyles";
-import { StyleSheet } from "react-native-unistyles";
+import { type UnistylesVariants, StyleSheet } from "react-native-unistyles";
 
 interface ContainerProps
   extends PropsWithChildren,
@@ -18,11 +16,11 @@ export const Container: FunctionComponent<ContainerProps> = ({
     //...
   });
 
-  return <View style={[styles.container(), style]}>{children}</View>;
+  return <View style={[styles.container, style]}>{children}</View>;
 };
 
 const styles = StyleSheet.create((theme, rt) => ({
-  container: () => ({
+  container: {
     flex: 1,
     width: "100%",
     paddingTop: rt.insets.top,
@@ -31,5 +29,5 @@ const styles = StyleSheet.create((theme, rt) => ({
     paddingRight: rt.insets.right,
     backgroundColor: theme.colors.backgroundColor,
     variants: {},
-  }),
+  },
 }));
