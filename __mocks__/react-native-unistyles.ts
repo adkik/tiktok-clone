@@ -1,5 +1,14 @@
 export const StyleSheet = {
-  create: (styles: any) => styles,
+  create: (factory: any) => {
+    const generated = factory(require("@/styles/theme").lightTheme, {
+      fontScale: 1,
+    });
+
+    return {
+      ...generated,
+      useVariants: jest.fn().mockImplementation(() => generated),
+    };
+  },
   configure: jest.fn(),
 };
 
