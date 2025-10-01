@@ -53,7 +53,7 @@ const styles = StyleSheet.create((theme, rt) => ({
           color: theme.colors.accent,
         },
         default: {
-          color: "theme.colors.typography",
+          color: theme.colors.typography,
         },
       },
       isCaption: {
